@@ -54,8 +54,8 @@
       }); 
 
       //on click of likes, eats is shown
-      $('#pet_feels').click(function(){
-        $('#pet_likes').slideDown(200); 
+      $('#pet_likes').click(function(){
+        $('#pet_eats').slideDown(200); 
       }); 
       
       
@@ -65,7 +65,36 @@
             let likes = $("input[name=likes]:checked").val();
             let eats = $("input[name=eats]:checked").val();
             let pet = "";
-            alert(feels);
+
+          if(feels=="fluffy" && likes=="petted"&& eats=="carrots") {
+            pet = rabbit;
+          }
+            //alert(feels);
+
+          //where we'll store all the data to show
+          var output = '';
+
+          output += `<p>Your pet feels ${feels}.</p>`;
+          output += `<p>Your pet likes to be ${likes}.</p>`;
+          output += `<p>Your pet likes to eat ${eats}.</p>`;
+
+
+          $.get('includes/get_pet.php',{critter:pet})
+          .done(function(data){
+            //lets output info about the pet to the page
+            $('#output').html(data + output); 
+          });
+
+           .fail(function(xhr, status, error) {
+               //Ajax request failed.
+               var errorMessage = xhr.status + ': ' + xhr.statusText
+               alert('Error - ' + errorMessage);
+           })
+
+          
+
+           //lets output info about the pet to the page
+         
 
 
         });
