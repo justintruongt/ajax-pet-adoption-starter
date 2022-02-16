@@ -67,29 +67,54 @@
             let pet = "";
 
           if(feels=="fluffy" && likes=="petted"&& eats=="carrots") {
-            pet = rabbit;
+            pet = "rabbit";
           }
+          if(feels=="scaly" && likes=="ridden"&& eats=="pets") {
+            pet = "velociraptor";
+          }
+          
             //alert(feels);
 
           //where we'll store all the data to show
           var output = '';
 
+          output += `<p>Congratulations! You have a new pet ${pet}.</p>`;
           output += `<p>Your pet feels ${feels}.</p>`;
           output += `<p>Your pet likes to be ${likes}.</p>`;
           output += `<p>Your pet likes to eat ${eats}.</p>`;
+
+
+          //get data from server side page using AJAX
+          $.get( "includes/get_pet.php", { critter: pet } )
+ .done(function( data ) {
+   alert( "Data Loaded: " + data );
+ })
+ .fail(function(xhr, status, error) {
+               //Ajax request failed.
+               var errorMessage = xhr.status + ': ' + xhr.statusText
+               alert('Error - ' + errorMessage);
+           })
+           
+            
+            
+            
+            
+            
+;
+
 
 
           $.get('includes/get_pet.php',{critter:pet})
           .done(function(data){
             //lets output info about the pet to the page
             $('#output').html(data + output); 
-          });
+          })
 
            .fail(function(xhr, status, error) {
                //Ajax request failed.
                var errorMessage = xhr.status + ': ' + xhr.statusText
                alert('Error - ' + errorMessage);
-           })
+           });
 
           
 
